@@ -4,6 +4,7 @@ import data from "./data.json";
 import "./App.css";
 
 function App() {
+  //useEffect hook so the d3 barchart runs when the page loads
   useEffect(() => {
     runD3();
   }, []);
@@ -43,6 +44,7 @@ function App() {
         tooltip.style("opacity", 0);
       };
 
+      //creating the svg bar chart
       let svg = d3
         .select("#bar-chart")
         .append("svg")
@@ -50,13 +52,16 @@ function App() {
         .attr("width", w)
         .attr("height", h);
 
+      //creating the bars for the barchart
       svg
         .selectAll("rect")
         .data(data)
         .enter()
         .append("rect")
-        .attr("x", (d, i) => i * (w / data.length) + 5)
+        .attr("x", (d, i) => i * (w / data.length))
+        // the *3 is to scale the bars up 3 times its original size for easier look and the -20 is to lift the bars up enough for the days to be written below them
         .attr("y", (d) => h - d.amount * 3 - 20)
+        //-10 in the width to allow for the space between bars
         .attr("width", w / data.length - 10)
         .attr("height", (d) => d.amount * 3)
         .attr("rx", 5)
@@ -65,13 +70,14 @@ function App() {
         .attr("class", (d, i) => {
           if (i === today - 1) {
             console.log(today, i);
-            return "hover";
+            return "today-bar";
           }
         })
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
         .on("mouseleave", mouseleave);
 
+      //creating the day label below the barchart
       svg
         .selectAll("text")
         .data(data)

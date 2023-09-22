@@ -83,8 +83,12 @@ text {
   opacity: 0;
 }
 
-.hover:hover {
+.today-bar {
   fill: var(--color-cyan);
+}
+
+.today-bar:hover {
+  fill: hsl(186, 34%, 75%);
 }
 
 @media screen and (max-width: 680px) {
@@ -101,6 +105,10 @@ text {
   #bar-chart {
     width: 85vw;
     position: relative;
+  }
+
+  #tooltip {
+    font-size: 0.6em;
   }
 
   .total {
